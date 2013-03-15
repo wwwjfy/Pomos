@@ -1,0 +1,324 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EAC3C06816F2B570003EB5EB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC3C06716F2B570003EB5EB /* Cocoa.framework */; };
+		EAC3C07216F2B570003EB5EB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAC3C07016F2B570003EB5EB /* InfoPlist.strings */; };
+		EAC3C07416F2B570003EB5EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC3C07316F2B570003EB5EB /* main.m */; };
+		EAC3C07816F2B570003EB5EB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = EAC3C07616F2B570003EB5EB /* Credits.rtf */; };
+		EAC3C07B16F2B570003EB5EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC3C07A16F2B570003EB5EB /* AppDelegate.m */; };
+		EAC3C07E16F2B571003EB5EB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC3C07C16F2B571003EB5EB /* MainMenu.xib */; };
+		EAC3C08116F2B571003EB5EB /* Pomos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		EAC3C06416F2B570003EB5EB /* Pomos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAC3C06716F2B570003EB5EB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		EAC3C06A16F2B570003EB5EB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		EAC3C06B16F2B570003EB5EB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		EAC3C06C16F2B570003EB5EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		EAC3C06F16F2B570003EB5EB /* Pomos-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pomos-Info.plist"; sourceTree = "<group>"; };
+		EAC3C07116F2B570003EB5EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EAC3C07316F2B570003EB5EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EAC3C07516F2B570003EB5EB /* Pomos-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pomos-Prefix.pch"; sourceTree = "<group>"; };
+		EAC3C07716F2B570003EB5EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		EAC3C07916F2B570003EB5EB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		EAC3C07A16F2B570003EB5EB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EAC3C07D16F2B571003EB5EB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		EAC3C08016F2B571003EB5EB /* Pomos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pomos.xcdatamodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EAC3C06116F2B570003EB5EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAC3C06816F2B570003EB5EB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EAC3C05B16F2B570003EB5EB = {
+			isa = PBXGroup;
+			children = (
+				EAC3C06D16F2B570003EB5EB /* Pomos */,
+				EAC3C06616F2B570003EB5EB /* Frameworks */,
+				EAC3C06516F2B570003EB5EB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EAC3C06516F2B570003EB5EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EAC3C06416F2B570003EB5EB /* Pomos.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EAC3C06616F2B570003EB5EB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EAC3C06716F2B570003EB5EB /* Cocoa.framework */,
+				EAC3C06916F2B570003EB5EB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EAC3C06916F2B570003EB5EB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EAC3C06A16F2B570003EB5EB /* AppKit.framework */,
+				EAC3C06B16F2B570003EB5EB /* CoreData.framework */,
+				EAC3C06C16F2B570003EB5EB /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		EAC3C06D16F2B570003EB5EB /* Pomos */ = {
+			isa = PBXGroup;
+			children = (
+				EAC3C07916F2B570003EB5EB /* AppDelegate.h */,
+				EAC3C07A16F2B570003EB5EB /* AppDelegate.m */,
+				EAC3C07C16F2B571003EB5EB /* MainMenu.xib */,
+				EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */,
+				EAC3C06E16F2B570003EB5EB /* Supporting Files */,
+			);
+			path = Pomos;
+			sourceTree = "<group>";
+		};
+		EAC3C06E16F2B570003EB5EB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EAC3C06F16F2B570003EB5EB /* Pomos-Info.plist */,
+				EAC3C07016F2B570003EB5EB /* InfoPlist.strings */,
+				EAC3C07316F2B570003EB5EB /* main.m */,
+				EAC3C07516F2B570003EB5EB /* Pomos-Prefix.pch */,
+				EAC3C07616F2B570003EB5EB /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EAC3C06316F2B570003EB5EB /* Pomos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "Pomos" */;
+			buildPhases = (
+				EAC3C06016F2B570003EB5EB /* Sources */,
+				EAC3C06116F2B570003EB5EB /* Frameworks */,
+				EAC3C06216F2B570003EB5EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Pomos;
+			productName = Pomos;
+			productReference = EAC3C06416F2B570003EB5EB /* Pomos.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EAC3C05C16F2B570003EB5EB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
+			buildConfigurationList = EAC3C05F16F2B570003EB5EB /* Build configuration list for PBXProject "Pomos" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EAC3C05B16F2B570003EB5EB;
+			productRefGroup = EAC3C06516F2B570003EB5EB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EAC3C06316F2B570003EB5EB /* Pomos */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EAC3C06216F2B570003EB5EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAC3C07216F2B570003EB5EB /* InfoPlist.strings in Resources */,
+				EAC3C07816F2B570003EB5EB /* Credits.rtf in Resources */,
+				EAC3C07E16F2B571003EB5EB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EAC3C06016F2B570003EB5EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAC3C07416F2B570003EB5EB /* main.m in Sources */,
+				EAC3C07B16F2B570003EB5EB /* AppDelegate.m in Sources */,
+				EAC3C08116F2B571003EB5EB /* Pomos.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		EAC3C07016F2B570003EB5EB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAC3C07116F2B570003EB5EB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		EAC3C07616F2B570003EB5EB /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAC3C07716F2B570003EB5EB /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		EAC3C07C16F2B571003EB5EB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAC3C07D16F2B571003EB5EB /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EAC3C08216F2B571003EB5EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		EAC3C08316F2B571003EB5EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		EAC3C08516F2B571003EB5EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
+				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		EAC3C08616F2B571003EB5EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
+				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EAC3C05F16F2B570003EB5EB /* Build configuration list for PBXProject "Pomos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAC3C08216F2B571003EB5EB /* Debug */,
+				EAC3C08316F2B571003EB5EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "Pomos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAC3C08516F2B571003EB5EB /* Debug */,
+				EAC3C08616F2B571003EB5EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EAC3C08016F2B571003EB5EB /* Pomos.xcdatamodel */,
+			);
+			currentVersion = EAC3C08016F2B571003EB5EB /* Pomos.xcdatamodel */;
+			path = Pomos.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = EAC3C05C16F2B570003EB5EB /* Project object */;
+}
