@@ -14,12 +14,7 @@
 
 static NSString *TimeUpConfirmedNotification = @"TimeUpConfirmedNotification";
 
-@interface AppDelegate : NSObject <NSApplicationDelegate> {
-  int _seconds;
-  NSTimer *_timer;
-  BOOL inBreak;
-  PomosNotificationDelegate *notificationDelegate;
-}
+@interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSTextField *countDownLabel;

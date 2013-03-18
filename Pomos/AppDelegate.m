@@ -18,6 +18,10 @@ enum Mode {
 
 @interface AppDelegate () {
   enum Mode _mode;
+  int _seconds;
+  NSTimer *_timer;
+  BOOL inBreak;
+  PomosNotificationDelegate *notificationDelegate;
 }
 
 @end
