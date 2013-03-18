@@ -18,7 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EAC3C06416F2B570003EB5EB /* Pomos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA1BE8C516F6F10400D05D6D /* Pomos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Pomos.entitlements; sourceTree = "<group>"; };
+		EAC3C06416F2B570003EB5EB /* pomos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pomos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC3C06716F2B570003EB5EB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		EAC3C06A16F2B570003EB5EB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		EAC3C06B16F2B570003EB5EB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -60,7 +61,7 @@
 		EAC3C06516F2B570003EB5EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EAC3C06416F2B570003EB5EB /* Pomos.app */,
+				EAC3C06416F2B570003EB5EB /* pomos.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -87,6 +88,7 @@
 		EAC3C06D16F2B570003EB5EB /* Pomos */ = {
 			isa = PBXGroup;
 			children = (
+				EA1BE8C516F6F10400D05D6D /* Pomos.entitlements */,
 				EAC3C07916F2B570003EB5EB /* AppDelegate.h */,
 				EAC3C07A16F2B570003EB5EB /* AppDelegate.m */,
 				EAC3C07C16F2B571003EB5EB /* MainMenu.xib */,
@@ -113,9 +115,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EAC3C06316F2B570003EB5EB /* Pomos */ = {
+		EAC3C06316F2B570003EB5EB /* pomos */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "Pomos" */;
+			buildConfigurationList = EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "pomos" */;
 			buildPhases = (
 				EAC3C06016F2B570003EB5EB /* Sources */,
 				EAC3C06116F2B570003EB5EB /* Frameworks */,
@@ -125,9 +127,9 @@
 			);
 			dependencies = (
 			);
-			name = Pomos;
+			name = pomos;
 			productName = Pomos;
-			productReference = EAC3C06416F2B570003EB5EB /* Pomos.app */;
+			productReference = EAC3C06416F2B570003EB5EB /* pomos.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -150,7 +152,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EAC3C06316F2B570003EB5EB /* Pomos */,
+				EAC3C06316F2B570003EB5EB /* pomos */,
 			);
 		};
 /* End PBXProject section */
@@ -271,12 +273,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = Pomos/Pomos.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer: Tony Wang (88QA3H335W)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
 				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B57306FF-0BF7-444E-9BCC-D7E31988F4F3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -285,12 +289,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = Pomos/Pomos.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer: Tony Wang (88QA3H335W)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
 				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B57306FF-0BF7-444E-9BCC-D7E31988F4F3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -307,7 +313,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "Pomos" */ = {
+		EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "pomos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EAC3C08516F2B571003EB5EB /* Debug */,
