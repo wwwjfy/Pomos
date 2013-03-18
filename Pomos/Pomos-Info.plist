@@ -31,6 +31,6 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSUserNotificationAlertStyle</key>
-	<string>none</string>
+	<string>alert</string>
 </dict>
 </plist>
