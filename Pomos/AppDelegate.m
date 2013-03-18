@@ -7,24 +7,130 @@
 //
 
 #import "AppDelegate.h"
+#import "PomosNotificationDelegate.h"
+
+enum Mode {
+  Initial,
+  Working,
+  Finished,
+  Breaking
+};
+
+@interface AppDelegate () {
+  enum Mode _mode;
+}
+
+@end
 
 @implementation AppDelegate
-
-- (void)dealloc
-{
-  [_persistentStoreCoordinator release];
-  [_managedObjectModel release];
-  [_managedObjectContext release];
-    [super dealloc];
-}
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
+@synthesize theButton;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-  // Insert code here to initialize your application
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(onWindowWillClose:)
+                                               name:NSWindowWillCloseNotification
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(onWillTerminate:)
+                                               name:NSApplicationWillTerminateNotification
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(timeUpConfirmed:)
+                                               name:TimeUpConfirmedNotification
+                                             object:nil];
+  notificationDelegate = [[PomosNotificationDelegate alloc] init];
+  [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:notificationDelegate];
+  _mode = Initial;
+}
+
+- (void)onWindowWillClose:(NSNotification *)notification {
+  [[NSApplication sharedApplication] terminate:nil];
+}
+
+- (void)onWillTerminate:(NSNotification *)notification {
+  [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
+}
+
+- (void)setSeconds:(int)newValue {
+  _seconds = newValue;
+  [[self countDownLabel] setStringValue:[NSString stringWithFormat:@"%02d : %02d", _seconds / 60, _seconds % 60]];
+}
+
+- (void)timeUpConfirmed:(NSNotification *)notification {
+  if ([_timer isValid]) {
+    return;
+  }
+  if (_mode == Finished || _mode == Initial) {
+    [self nextMode];
+  }
+}
+
+- (void)countingDown:(NSTimer *)timer {
+  [self setSeconds:(_seconds - 1)];
+
+  if (_seconds <= 0) {
+    NSUserNotification *timeUp = [[NSUserNotification alloc] init];
+    if (_mode == Breaking) {
+      [timeUp setTitle:@"No more break!"];
+      [timeUp setActionButtonTitle:@"Back to work"];
+    } else {
+      [timeUp setTitle:@"Time Up!"];
+      [timeUp setActionButtonTitle:@"I've done .."];
+    }
+    [[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:timeUp];
+    [self nextMode];
+  }
+}
+
+- (IBAction)onClick:(id)sender {
+  if (_mode == Working) {
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Are you sure to give up this pomodoro?" defaultButton:@"Yes" alternateButton:@"It's a slip" otherButton:nil informativeTextWithFormat:@""];
+    [[alert buttons][1] setKeyEquivalent:@"\e"];
+    switch ([alert runModal]) {
+      case NSAlertAlternateReturn:
+        return;
+        break;
+      default:
+        break;
+    }
+    _mode = Breaking;
+  }
+  [self nextMode];
+}
+
+- (void)nextMode {
+  switch (_mode) {
+    case Initial:
+      [self setSeconds:SESSION_LENGTH];
+      _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
+      [theButton setTitle:@"Give up"];
+      _mode = Working;
+      break;
+    case Working:
+      [self setSeconds:BREAK_LENGTH];
+      [_timer invalidate];
+      [theButton setTitle:@"Break"];
+      _mode = Finished;
+      break;
+    case Finished:
+      [self setSeconds:BREAK_LENGTH];
+      _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
+      [theButton setTitle:@"Skip"];
+      _mode = Breaking;
+      break;
+    case Breaking:
+      [_timer invalidate];
+      [self setSeconds:SESSION_LENGTH];
+      [theButton setTitle:@"Start"];
+      _mode = Initial;
+      break;
+    default:
+      break;
+  }
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "net.wwwjfy.Pomos" in the user's Application Support directory.
@@ -53,19 +159,19 @@
     if (_persistentStoreCoordinator) {
         return _persistentStoreCoordinator;
     }
-    
+
     NSManagedObjectModel *mom = [self managedObjectModel];
     if (!mom) {
         NSLog(@"%@:%@ No model to generate a store from", [self class], NSStringFromSelector(_cmd));
         return nil;
     }
-    
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *applicationFilesDirectory = [self applicationFilesDirectory];
     NSError *error = nil;
-    
+
     NSDictionary *properties = [applicationFilesDirectory resourceValuesForKeys:@[NSURLIsDirectoryKey] error:&error];
-    
+
     if (!properties) {
         BOOL ok = NO;
         if ([error code] == NSFileReadNoSuchFileError) {
@@ -79,24 +185,24 @@
         if (![properties[NSURLIsDirectoryKey] boolValue]) {
             // Customize and localize this error.
             NSString *failureDescription = [NSString stringWithFormat:@"Expected a folder to store application data, found a file (%@).", [applicationFilesDirectory path]];
-            
+
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             [dict setValue:failureDescription forKey:NSLocalizedDescriptionKey];
             error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:101 userInfo:dict];
-            
+
             [[NSApplication sharedApplication] presentError:error];
             return nil;
         }
     }
-    
+
     NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"Pomos.storedata"];
-    NSPersistentStoreCoordinator *coordinator = [[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom] autorelease];
+    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
     if (![coordinator addPersistentStoreWithType:NSXMLStoreType configuration:nil URL:url options:nil error:&error]) {
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
-    _persistentStoreCoordinator = [coordinator retain];
-    
+    _persistentStoreCoordinator = coordinator;
+
     return _persistentStoreCoordinator;
 }
 
@@ -106,7 +212,7 @@
     if (_managedObjectContext) {
         return _managedObjectContext;
     }
-    
+
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (!coordinator) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -132,11 +238,11 @@
 - (IBAction)saveAction:(id)sender
 {
     NSError *error = nil;
-    
+
     if (![[self managedObjectContext] commitEditing]) {
         NSLog(@"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
     }
-    
+
     if (![[self managedObjectContext] save:&error]) {
         [[NSApplication sharedApplication] presentError:error];
     }
@@ -145,20 +251,20 @@
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
     // Save changes in the application's managed object context before the application terminates.
-    
+
     if (!_managedObjectContext) {
         return NSTerminateNow;
     }
-    
+
     if (![[self managedObjectContext] commitEditing]) {
         NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
         return NSTerminateCancel;
     }
-    
+
     if (![[self managedObjectContext] hasChanges]) {
         return NSTerminateNow;
     }
-    
+
     NSError *error = nil;
     if (![[self managedObjectContext] save:&error]) {
 
@@ -172,14 +278,14 @@
         NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
         NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
         NSString *cancelButton = NSLocalizedString(@"Cancel", @"Cancel button title");
-        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+        NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:question];
         [alert setInformativeText:info];
         [alert addButtonWithTitle:quitButton];
         [alert addButtonWithTitle:cancelButton];
 
         NSInteger answer = [alert runModal];
-        
+
         if (answer == NSAlertAlternateReturn) {
             return NSTerminateCancel;
         }

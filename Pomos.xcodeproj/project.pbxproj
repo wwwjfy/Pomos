@@ -14,6 +14,7 @@
 		EAC3C07B16F2B570003EB5EB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC3C07A16F2B570003EB5EB /* AppDelegate.m */; };
 		EAC3C07E16F2B571003EB5EB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC3C07C16F2B571003EB5EB /* MainMenu.xib */; };
 		EAC3C08116F2B571003EB5EB /* Pomos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */; };
+		EAE31EE016F44820007775CE /* PomosNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE31EDF16F44820007775CE /* PomosNotificationDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,8 @@
 		EAC3C07A16F2B570003EB5EB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		EAC3C07D16F2B571003EB5EB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		EAC3C08016F2B571003EB5EB /* Pomos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pomos.xcdatamodel; sourceTree = "<group>"; };
+		EAE31EDE16F44820007775CE /* PomosNotificationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PomosNotificationDelegate.h; sourceTree = "<group>"; };
+		EAE31EDF16F44820007775CE /* PomosNotificationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PomosNotificationDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +91,8 @@
 				EAC3C07A16F2B570003EB5EB /* AppDelegate.m */,
 				EAC3C07C16F2B571003EB5EB /* MainMenu.xib */,
 				EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */,
+				EAE31EDE16F44820007775CE /* PomosNotificationDelegate.h */,
+				EAE31EDF16F44820007775CE /* PomosNotificationDelegate.m */,
 				EAC3C06E16F2B570003EB5EB /* Supporting Files */,
 			);
 			path = Pomos;
@@ -171,6 +176,7 @@
 				EAC3C07416F2B570003EB5EB /* main.m in Sources */,
 				EAC3C07B16F2B570003EB5EB /* AppDelegate.m in Sources */,
 				EAC3C08116F2B571003EB5EB /* Pomos.xcdatamodeld in Sources */,
+				EAE31EE016F44820007775CE /* PomosNotificationDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +270,8 @@
 		EAC3C08516F2B571003EB5EB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
@@ -276,6 +284,8 @@
 		EAC3C08616F2B571003EB5EB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
@@ -304,6 +314,7 @@
 				EAC3C08616F2B571003EB5EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
