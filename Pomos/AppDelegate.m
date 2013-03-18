@@ -58,6 +58,29 @@ enum Mode {
 - (void)setSeconds:(int)newValue {
   _seconds = newValue;
   [[self countDownLabel] setStringValue:[NSString stringWithFormat:@"%02d : %02d", _seconds / 60, _seconds % 60]];
+  [self setBadge];
+}
+
+- (void)setBadge {
+  // The basic display rule is:
+  // min >= 5, show x min
+  // min in [1, 5], show x:y, where x is min, y is 0 or 30 sec
+  // if sec > 10, show x-ty, otherwise, show sec
+  int min = _seconds / 60;
+  int sec = _seconds % 60;
+  NSString *badge;
+  if (min >= 5) {
+    badge = [NSString stringWithFormat:@"%d min", min];
+  } else if (min >= 1) {
+    badge = [NSString stringWithFormat:@"%d:%02d", min, sec / 30 * 30];
+  } else {
+    if (sec > 10) {
+      badge = [NSString stringWithFormat:@"%d s", sec / 10 * 10];
+    } else {
+      badge = [NSString stringWithFormat:@"%d s", sec];
+    }
+  }
+  [[[NSApplication sharedApplication] dockTile] setBadgeLabel:badge];
 }
 
 - (void)timeUpConfirmed:(NSNotification *)notification {
