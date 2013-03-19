@@ -7,6 +7,7 @@
 //
 
 #import "Controller.h"
+#import "PomosNotificationDelegate.h"
 
 #define SESSION_LENGTH 25 * 60
 #define BREAK_LENGTH 5 * 60
@@ -33,6 +34,10 @@ enum Mode {
 
 - (id)init {
   if ((self = [super init])) {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(timeUpConfirmed:)
+                                                 name:TimeUpConfirmedNotification
+                                               object:nil];
     _mode = Initial;
   }
   return self;

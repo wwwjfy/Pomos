@@ -30,10 +30,6 @@
                                            selector:@selector(onWillTerminate:)
                                                name:NSApplicationWillTerminateNotification
                                              object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(timeUpConfirmed:)
-                                               name:TimeUpConfirmedNotification
-                                             object:nil];
   notificationDelegate = [[PomosNotificationDelegate alloc] init];
   [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:notificationDelegate];
 }

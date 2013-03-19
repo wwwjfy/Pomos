@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define TimeUpConfirmedNotification @"TimeUpConfirmedNotification"
+
 @interface PomosNotificationDelegate : NSObject <NSUserNotificationCenterDelegate>
 
 @end
