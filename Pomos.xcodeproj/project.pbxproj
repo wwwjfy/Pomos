@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA1BE8C816F8198D00D05D6D /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1BE8C716F8198D00D05D6D /* Controller.m */; };
 		EAC3C06816F2B570003EB5EB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC3C06716F2B570003EB5EB /* Cocoa.framework */; };
 		EAC3C07216F2B570003EB5EB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAC3C07016F2B570003EB5EB /* InfoPlist.strings */; };
 		EAC3C07416F2B570003EB5EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC3C07316F2B570003EB5EB /* main.m */; };
@@ -19,6 +20,8 @@
 
 /* Begin PBXFileReference section */
 		EA1BE8C516F6F10400D05D6D /* Pomos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Pomos.entitlements; sourceTree = "<group>"; };
+		EA1BE8C616F8198D00D05D6D /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		EA1BE8C716F8198D00D05D6D /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		EAC3C06416F2B570003EB5EB /* pomos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pomos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC3C06716F2B570003EB5EB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		EAC3C06A16F2B570003EB5EB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -88,10 +91,12 @@
 		EAC3C06D16F2B570003EB5EB /* Pomos */ = {
 			isa = PBXGroup;
 			children = (
-				EA1BE8C516F6F10400D05D6D /* Pomos.entitlements */,
 				EAC3C07916F2B570003EB5EB /* AppDelegate.h */,
 				EAC3C07A16F2B570003EB5EB /* AppDelegate.m */,
+				EA1BE8C616F8198D00D05D6D /* Controller.h */,
+				EA1BE8C716F8198D00D05D6D /* Controller.m */,
 				EAC3C07C16F2B571003EB5EB /* MainMenu.xib */,
+				EA1BE8C516F6F10400D05D6D /* Pomos.entitlements */,
 				EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */,
 				EAE31EDE16F44820007775CE /* PomosNotificationDelegate.h */,
 				EAE31EDF16F44820007775CE /* PomosNotificationDelegate.m */,
@@ -179,6 +184,7 @@
 				EAC3C07B16F2B570003EB5EB /* AppDelegate.m in Sources */,
 				EAC3C08116F2B571003EB5EB /* Pomos.xcdatamodeld in Sources */,
 				EAE31EE016F44820007775CE /* PomosNotificationDelegate.m in Sources */,
+				EA1BE8C816F8198D00D05D6D /* Controller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
