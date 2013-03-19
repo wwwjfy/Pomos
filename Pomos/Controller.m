@@ -50,6 +50,9 @@ enum Mode {
 }
 
 - (void)setBadge {
+  if (_mode == Finished || _mode == Initial) {
+    return;
+  }
   // The basic display rule is:
   // min >= 5, show x min
   // min in [1, 5], show x:y, where x is min, y is 0 or 30 sec
@@ -69,6 +72,10 @@ enum Mode {
     }
   }
   [[[NSApplication sharedApplication] dockTile] setBadgeLabel:badge];
+}
+
+- (void)resetBadge {
+  [[[NSApplication sharedApplication] dockTile] setBadgeLabel:nil];
 }
 
 - (void)timeUpConfirmed:(NSNotification *)notification {
@@ -116,28 +123,30 @@ enum Mode {
 - (void)nextMode {
   switch (_mode) {
     case Initial:
+      _mode = Working;
       [self setSeconds:SESSION_LENGTH];
       _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
       [theButton setTitle:@"Give up"];
-      _mode = Working;
       break;
     case Working:
+      _mode = Finished;
       [self setSeconds:BREAK_LENGTH];
       [_timer invalidate];
       [theButton setTitle:@"Break"];
-      _mode = Finished;
+      [self resetBadge];
       break;
     case Finished:
+      _mode = Breaking;
       [self setSeconds:BREAK_LENGTH];
       _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
       [theButton setTitle:@"Skip"];
-      _mode = Breaking;
       break;
     case Breaking:
+      _mode = Initial;
       [_timer invalidate];
       [self setSeconds:SESSION_LENGTH];
       [theButton setTitle:@"Start"];
-      _mode = Initial;
+      [self resetBadge];
       break;
     default:
       break;
