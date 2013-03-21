@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>net.wwwjfy.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>net.wwwjfy.pomos</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

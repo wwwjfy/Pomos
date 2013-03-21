@@ -120,9 +120,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EAC3C06316F2B570003EB5EB /* pomos */ = {
+		EAC3C06316F2B570003EB5EB /* Pomos */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "pomos" */;
+			buildConfigurationList = EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "Pomos" */;
 			buildPhases = (
 				EAC3C06016F2B570003EB5EB /* Sources */,
 				EAC3C06116F2B570003EB5EB /* Frameworks */,
@@ -132,7 +132,7 @@
 			);
 			dependencies = (
 			);
-			name = pomos;
+			name = Pomos;
 			productName = Pomos;
 			productReference = EAC3C06416F2B570003EB5EB /* pomos.app */;
 			productType = "com.apple.product-type.application";
@@ -157,7 +157,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EAC3C06316F2B570003EB5EB /* pomos */,
+				EAC3C06316F2B570003EB5EB /* Pomos */,
 			);
 		};
 /* End PBXProject section */
@@ -319,7 +319,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "pomos" */ = {
+		EAC3C08416F2B571003EB5EB /* Build configuration list for PBXNativeTarget "Pomos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EAC3C08516F2B571003EB5EB /* Debug */,
