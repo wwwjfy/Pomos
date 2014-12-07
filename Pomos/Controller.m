@@ -21,9 +21,9 @@ enum Mode {
 
 @interface Controller () {
   enum Mode _mode;
-  int _seconds;
   NSTimer *_timer;
   BOOL inBreak;
+  NSDate *endAt;
 }
 
 @end
@@ -43,13 +43,18 @@ enum Mode {
   return self;
 }
 
-- (void)setSeconds:(int)newValue {
-  _seconds = newValue;
-  [[self countDownLabel] setStringValue:[NSString stringWithFormat:@"%02d : %02d", _seconds / 60, _seconds % 60]];
-  [self setBadge];
+- (void)setSeconds:(int)seconds {
+  [[self countDownLabel] setStringValue:[NSString stringWithFormat:@"%02d : %02d", seconds / 60, seconds % 60]];
+  [self setBadge:seconds];
 }
 
-- (void)setBadge {
+- (int)countSeconds {
+  int seconds = [endAt timeIntervalSinceNow];
+  [self setSeconds:seconds];
+  return seconds;
+}
+
+- (void)setBadge:(int)seconds {
   if (_mode == Finished || _mode == Initial) {
     return;
   }
@@ -57,8 +62,8 @@ enum Mode {
   // min >= 5, show x min
   // min in [1, 5], show x:y, where x is min, y is 0 or 30 sec
   // if sec > 10, show x-ty, otherwise, show sec
-  int min = _seconds / 60;
-  int sec = _seconds % 60;
+  int min = seconds / 60;
+  int sec = seconds % 60;
   NSString *badge;
   if (min >= 5) {
     badge = [NSString stringWithFormat:@"%d min", min];
@@ -88,9 +93,9 @@ enum Mode {
 }
 
 - (void)countingDown:(NSTimer *)timer {
-  [self setSeconds:(_seconds - 1)];
+  int seconds = [self countSeconds];
 
-  if (_seconds <= 0) {
+  if (seconds <= 0) {
     NSUserNotification *timeUp = [[NSUserNotification alloc] init];
     if (_mode == Breaking) {
       [timeUp setTitle:@"No more break!"];
@@ -124,20 +129,22 @@ enum Mode {
   switch (_mode) {
     case Initial:
       _mode = Working;
-      [self setSeconds:SESSION_LENGTH];
+      endAt = [NSDate dateWithTimeIntervalSinceNow:SESSION_LENGTH];
+      [self countSeconds];
       _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
       [theButton setTitle:@"Give up"];
       break;
     case Working:
       _mode = Finished;
-      [self setSeconds:BREAK_LENGTH];
       [_timer invalidate];
+      [self setSeconds:BREAK_LENGTH];
       [theButton setTitle:@"Break"];
       [self resetBadge];
       break;
     case Finished:
       _mode = Breaking;
-      [self setSeconds:BREAK_LENGTH];
+      endAt = [NSDate dateWithTimeIntervalSinceNow:BREAK_LENGTH];
+      [self countSeconds];
       _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
       [theButton setTitle:@"Skip"];
       break;

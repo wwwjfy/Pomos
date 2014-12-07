@@ -22,7 +22,7 @@
 		EA1BE8C516F6F10400D05D6D /* Pomos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Pomos.entitlements; sourceTree = "<group>"; };
 		EA1BE8C616F8198D00D05D6D /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		EA1BE8C716F8198D00D05D6D /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
-		EAC3C06416F2B570003EB5EB /* pomos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pomos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAC3C06416F2B570003EB5EB /* Pomos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC3C06716F2B570003EB5EB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		EAC3C06A16F2B570003EB5EB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		EAC3C06B16F2B570003EB5EB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -64,7 +64,7 @@
 		EAC3C06516F2B570003EB5EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EAC3C06416F2B570003EB5EB /* pomos.app */,
+				EAC3C06416F2B570003EB5EB /* Pomos.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,7 +134,7 @@
 			);
 			name = Pomos;
 			productName = Pomos;
-			productReference = EAC3C06416F2B570003EB5EB /* pomos.app */;
+			productReference = EAC3C06416F2B570003EB5EB /* Pomos.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -286,7 +286,7 @@
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
 				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B57306FF-0BF7-444E-9BCC-D7E31988F4F3";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -302,7 +302,7 @@
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
 				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B57306FF-0BF7-444E-9BCC-D7E31988F4F3";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -12,6 +12,7 @@
 @implementation PomosNotificationDelegate
 
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification {
+  [[NSApplication sharedApplication] unhideWithoutActivation];
   [[NSNotificationCenter defaultCenter] postNotificationName:TimeUpConfirmedNotification object:nil];
   [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
 }
