@@ -24,13 +24,19 @@ enum Mode {
   NSTimer *_timer;
   BOOL inBreak;
   NSDate *endAt;
+  NSURL *plistURL;
+  NSDate *date;
 }
+
+@property NSUInteger finished;
 
 @end
 
 @implementation Controller
 
 @synthesize theButton;
+@synthesize finishedLabel;
+@synthesize finished = _finished;
 
 - (id)init {
   if ((self = [super init])) {
@@ -38,9 +44,68 @@ enum Mode {
                                              selector:@selector(timeUpConfirmed:)
                                                  name:TimeUpConfirmedNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didUpdate:)
+                                                 name:NSWindowDidBecomeMainNotification
+                                               object:nil];
     _mode = Initial;
+
+    NSURL *pDir = [[[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory
+                                                          inDomain:NSUserDomainMask
+                                                 appropriateForURL:nil
+                                                            create:NO
+                                                             error:nil] URLByAppendingPathComponent:@"Pomos"];
+    [[NSFileManager defaultManager] createDirectoryAtURL:pDir
+                             withIntermediateDirectories:YES
+                                              attributes:nil
+                                                   error:nil];
+    plistURL = [pDir URLByAppendingPathComponent:@"pomos.plist"];
+
+    NSDictionary *dict = [self readInfo];
+
+    if (dict[@"Date"]) {
+      date = dict[@"Date"];
+    } else {
+      date = [NSDate date];
+    }
+    if (dict[@"Finished"]) {
+      [self setFinished:((NSNumber*)dict[@"Finished"]).unsignedIntegerValue];
+    } else {
+      [self setFinished:0];
+    }
   }
   return self;
+}
+
+- (void)didUpdate:(NSNotification *)notification {
+  [self setFinished:_finished];
+}
+
+- (NSUInteger)finished {
+  return _finished;
+}
+
+- (void)setFinished:(NSUInteger)finished {
+  _finished = finished;
+  [[self finishedLabel] setStringValue:[NSString stringWithFormat:@"%lu", (unsigned long)finished]];
+  [self saveInfo];
+}
+
+- (NSDictionary *)readInfo {
+  return [[NSString stringWithContentsOfURL:plistURL
+                                   encoding:NSUTF8StringEncoding
+                                      error:nil] propertyListFromStringsFileFormat];
+}
+
+- (void)saveInfo {
+  NSData *data = [NSPropertyListSerialization dataWithPropertyList:@{@"Date": self->date,
+                                                                     @"Finished": [NSNumber numberWithUnsignedInteger:self.finished]}
+                                                            format:NSPropertyListXMLFormat_v1_0
+                                                           options:0
+                                                             error:nil];
+  if (data) {
+    [data writeToURL:plistURL options:NSDataWritingAtomic error:nil];
+  }
 }
 
 - (void)setSeconds:(int)seconds {
@@ -125,6 +190,22 @@ enum Mode {
   [self nextMode];
 }
 
+- (void)checkFinished {
+  NSCalendar *calendar = [NSCalendar currentCalendar];
+  NSInteger components = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+
+  NSDateComponents *firstComponents = [calendar components:components fromDate:self->date];
+  NSDateComponents *secondComponents = [calendar components:components fromDate:[NSDate date]];
+
+  NSDate *date1 = [calendar dateFromComponents:firstComponents];
+  NSDate *date2 = [calendar dateFromComponents:secondComponents];
+
+  if ([date1 compare:date2] != NSOrderedSame) {
+    self->date = [NSDate date];
+    [self setFinished:0];
+  }
+}
+
 - (void)nextMode {
   switch (_mode) {
     case Initial:
@@ -147,6 +228,8 @@ enum Mode {
       [self countSeconds];
       _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
       [theButton setTitle:@"Skip"];
+      [self checkFinished];
+      [self setFinished:self.finished+1];
       break;
     case Breaking:
       _mode = Initial;
