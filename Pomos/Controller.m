@@ -45,7 +45,7 @@ enum Mode {
                                                  name:TimeUpConfirmedNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didUpdate:)
+                                             selector:@selector(didShow:)
                                                  name:NSWindowDidBecomeMainNotification
                                                object:nil];
     _mode = Initial;
@@ -73,11 +73,12 @@ enum Mode {
     } else {
       [self setFinished:0];
     }
+    [self checkFinished];
   }
   return self;
 }
 
-- (void)didUpdate:(NSNotification *)notification {
+- (void)didShow:(NSNotification *)notification {
   [self setFinished:_finished];
 }
 
