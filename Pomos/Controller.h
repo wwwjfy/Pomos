@@ -12,6 +12,7 @@
 @property (weak) IBOutlet NSButton *theButton;
 @property (weak) IBOutlet NSTextField *countDownLabel;
 @property (weak) IBOutlet NSTextField *finishedLabel;
+@property (weak) IBOutlet NSTextField *endsAtLabel;
 
 - (IBAction)onClick:(id)sender;
 

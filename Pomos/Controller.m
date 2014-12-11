@@ -26,6 +26,7 @@ enum Mode {
   NSDate *endAt;
   NSURL *plistURL;
   NSDate *date;
+  NSDateFormatter *dateFormatter;
 }
 
 @property NSUInteger finished;
@@ -74,6 +75,8 @@ enum Mode {
       [self setFinished:0];
     }
     [self checkFinished];
+
+    dateFormatter = [[NSDateFormatter alloc] initWithDateFormat:@"%H:%M" allowNaturalLanguage:NO];
   }
   return self;
 }
@@ -215,6 +218,8 @@ enum Mode {
       [self countSeconds];
       _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
       [theButton setTitle:@"Give up"];
+      [[self endsAtLabel] setStringValue:[NSString stringWithFormat:@"Ends at %@", [self->dateFormatter stringFromDate:endAt]]];
+      [[self endsAtLabel] setHidden:NO];
       break;
     case Working:
       _mode = Finished;
@@ -231,6 +236,8 @@ enum Mode {
       [theButton setTitle:@"Skip"];
       [self checkFinished];
       [self setFinished:self.finished+1];
+      [[self endsAtLabel] setStringValue:[NSString stringWithFormat:@"Ends at %@", [self->dateFormatter stringFromDate:endAt]]];
+      [[self endsAtLabel] setHidden:NO];
       break;
     case Breaking:
       _mode = Initial;
