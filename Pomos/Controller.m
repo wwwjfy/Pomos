@@ -167,11 +167,11 @@ enum Mode {
   if (seconds <= 0) {
     NSUserNotification *timeUp = [[NSUserNotification alloc] init];
     if (_mode == Breaking) {
-      [timeUp setTitle:@"No more break!"];
-      [timeUp setActionButtonTitle:@"Back to work"];
+      [timeUp setTitle:@"Back to work"];
+      [timeUp setActionButtonTitle:@"Sure"];
     } else {
       [timeUp setTitle:@"Time Up!"];
-      [timeUp setActionButtonTitle:@"I've done .."];
+      [timeUp setActionButtonTitle:@"Take a break"];
     }
     [[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:timeUp];
     [self nextMode];
@@ -211,6 +211,7 @@ enum Mode {
 }
 
 - (void)nextMode {
+  [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
   switch (_mode) {
     case Initial:
       _mode = Working;
