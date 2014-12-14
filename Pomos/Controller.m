@@ -226,6 +226,7 @@ enum Mode {
       [self setSeconds:BREAK_LENGTH];
       [theButton setTitle:@"Break"];
       [self resetBadge];
+      [self setFinished:self.finished+1];
       [self sendNotificationWithTitle:@"Time Up!" withButton:@"Take a break"];
       break;
     case Finished:
@@ -235,7 +236,6 @@ enum Mode {
       _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
       [theButton setTitle:@"Skip"];
       [self checkFinished];
-      [self setFinished:self.finished+1];
       [[self endsAtLabel] setStringValue:[NSString stringWithFormat:@"Ends at %@", [self->dateFormatter stringFromDate:endAt]]];
       [[self endsAtLabel] setHidden:NO];
       break;
