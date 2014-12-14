@@ -165,17 +165,15 @@ enum Mode {
   int seconds = [self countSeconds];
 
   if (seconds <= 0) {
-    NSUserNotification *timeUp = [[NSUserNotification alloc] init];
-    if (_mode == Breaking) {
-      [timeUp setTitle:@"Back to work"];
-      [timeUp setActionButtonTitle:@"Sure"];
-    } else {
-      [timeUp setTitle:@"Time Up!"];
-      [timeUp setActionButtonTitle:@"Take a break"];
-    }
-    [[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:timeUp];
     [self nextMode];
   }
+}
+
+- (void)sendNotificationWithTitle:(NSString *)title withButton:(NSString *)buttonTitle {
+  NSUserNotification *timeUp = [[NSUserNotification alloc] init];
+  [timeUp setTitle:title];
+  [timeUp setActionButtonTitle:buttonTitle];
+  [[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:timeUp];
 }
 
 - (IBAction)onClick:(id)sender {
@@ -228,6 +226,7 @@ enum Mode {
       [self setSeconds:BREAK_LENGTH];
       [theButton setTitle:@"Break"];
       [self resetBadge];
+      [self sendNotificationWithTitle:@"Time Up!" withButton:@"Take a break"];
       break;
     case Finished:
       _mode = Breaking;
@@ -246,6 +245,7 @@ enum Mode {
       [self setSeconds:SESSION_LENGTH];
       [theButton setTitle:@"Start"];
       [self resetBadge];
+      [self sendNotificationWithTitle:@"Back to work" withButton:@"Sure"];
       break;
     default:
       break;
