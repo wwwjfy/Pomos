@@ -16,6 +16,7 @@
 		EAC3C07E16F2B571003EB5EB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC3C07C16F2B571003EB5EB /* MainMenu.xib */; };
 		EAC3C08116F2B571003EB5EB /* Pomos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */; };
 		EAE31EE016F44820007775CE /* PomosNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE31EDF16F44820007775CE /* PomosNotificationDelegate.m */; };
+		EAF9B8E01ECAFD5E005B81CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAF9B8DF1ECAFD5E005B81CD /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		EAC3C08016F2B571003EB5EB /* Pomos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pomos.xcdatamodel; sourceTree = "<group>"; };
 		EAE31EDE16F44820007775CE /* PomosNotificationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PomosNotificationDelegate.h; sourceTree = "<group>"; };
 		EAE31EDF16F44820007775CE /* PomosNotificationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PomosNotificationDelegate.m; sourceTree = "<group>"; };
+		EAF9B8DF1ECAFD5E005B81CD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */,
 				EAE31EDE16F44820007775CE /* PomosNotificationDelegate.h */,
 				EAE31EDF16F44820007775CE /* PomosNotificationDelegate.m */,
+				EAF9B8DF1ECAFD5E005B81CD /* Images.xcassets */,
 				EAC3C06E16F2B570003EB5EB /* Supporting Files */,
 			);
 			path = Pomos;
@@ -168,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAC3C07216F2B570003EB5EB /* InfoPlist.strings in Resources */,
+				EAF9B8E01ECAFD5E005B81CD /* Images.xcassets in Resources */,
 				EAC3C07816F2B570003EB5EB /* Credits.rtf in Resources */,
 				EAC3C07E16F2B571003EB5EB /* MainMenu.xib in Resources */,
 			);
@@ -278,6 +282,7 @@
 		EAC3C08516F2B571003EB5EB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Pomos/Pomos.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer: Tony Wang (88QA3H335W)";
@@ -294,6 +299,7 @@
 		EAC3C08616F2B571003EB5EB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Pomos/Pomos.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer: Tony Wang (88QA3H335W)";
