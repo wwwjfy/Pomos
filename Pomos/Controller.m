@@ -210,6 +210,7 @@ enum Mode {
 
 - (void)nextMode {
   [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
+  [self checkFinished];
   switch (_mode) {
     case Initial:
       _mode = Working;
@@ -235,7 +236,6 @@ enum Mode {
       [self countSeconds];
       _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
       [theButton setTitle:@"Skip"];
-      [self checkFinished];
       [[self endsAtLabel] setStringValue:[NSString stringWithFormat:@"Ends at %@", [self->dateFormatter stringFromDate:endAt]]];
       [[self endsAtLabel] setHidden:NO];
       break;
