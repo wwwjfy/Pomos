@@ -180,14 +180,13 @@ enum Mode {
   if (_mode == Working) {
     NSAlert *alert = [NSAlert alertWithMessageText:@"Are you sure to give up this pomodoro?" defaultButton:@"Yes" alternateButton:@"It's a slip" otherButton:nil informativeTextWithFormat:@""];
     [[alert buttons][1] setKeyEquivalent:@"\e"];
-    switch ([alert runModal]) {
-      case NSAlertAlternateReturn:
-        return;
-        break;
-      default:
-        break;
+    if ([alert runModal] == NSAlertAlternateReturn) {
+      return;
     }
     _mode = Breaking;
+  } else if (_mode == Breaking) {
+    [_timer invalidate];
+    _mode = Initial;
   }
   [self nextMode];
 }
