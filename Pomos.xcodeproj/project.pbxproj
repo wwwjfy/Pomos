@@ -147,6 +147,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
+				TargetAttributes = {
+					EAC3C06316F2B570003EB5EB = {
+						DevelopmentTeam = 93RF9AKSH8;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = EAC3C05F16F2B570003EB5EB /* Build configuration list for PBXProject "Pomos" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -285,13 +291,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Pomos/Pomos.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer: Tony Wang (88QA3H335W)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 93RF9AKSH8;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
 				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -302,13 +310,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Pomos/Pomos.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer: Tony Wang (88QA3H335W)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 93RF9AKSH8;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
 				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
