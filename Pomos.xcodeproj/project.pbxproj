@@ -16,6 +16,7 @@
 		EAC3C07E16F2B571003EB5EB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC3C07C16F2B571003EB5EB /* MainMenu.xib */; };
 		EAC3C08116F2B571003EB5EB /* Pomos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */; };
 		EAE31EE016F44820007775CE /* PomosNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE31EDF16F44820007775CE /* PomosNotificationDelegate.m */; };
+		EAF429EE2EE732AF00673D73 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF429ED2EE732AF00673D73 /* UserNotifications.framework */; };
 		EAF9B8E01ECAFD5E005B81CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAF9B8DF1ECAFD5E005B81CD /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		EAC3C08016F2B571003EB5EB /* Pomos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pomos.xcdatamodel; sourceTree = "<group>"; };
 		EAE31EDE16F44820007775CE /* PomosNotificationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PomosNotificationDelegate.h; sourceTree = "<group>"; };
 		EAE31EDF16F44820007775CE /* PomosNotificationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PomosNotificationDelegate.m; sourceTree = "<group>"; };
+		EAF429ED2EE732AF00673D73 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		EAF9B8DF1ECAFD5E005B81CD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAF429EE2EE732AF00673D73 /* UserNotifications.framework in Frameworks */,
 				EAC3C06816F2B570003EB5EB /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -74,6 +77,7 @@
 		EAC3C06616F2B570003EB5EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EAF429ED2EE732AF00673D73 /* UserNotifications.framework */,
 				EAC3C06716F2B570003EB5EB /* Cocoa.framework */,
 				EAC3C06916F2B570003EB5EB /* Other Frameworks */,
 			);

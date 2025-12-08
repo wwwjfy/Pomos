@@ -16,5 +16,7 @@
 
 - (IBAction)onClick:(id)sender;
 
+- (NSInteger)sessionDuration;
+- (void)setSessionDuration:(NSInteger)seconds;
 
 @end

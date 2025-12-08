@@ -8,16 +8,13 @@
 
 #import "Controller.h"
 #import "PomosNotificationDelegate.h"
+#import <UserNotifications/UserNotifications.h>
 
-#define SESSION_LENGTH 25 * 60
 #define BREAK_LENGTH 5 * 60
 
-enum Mode {
-  Initial,
-  Working,
-  Finished,
-  Breaking
-};
+static NSString *const kPomosSessionDurationKey = @"PomosSessionDuration";
+
+enum Mode { Initial, Working, Finished, Breaking };
 
 @interface Controller () {
   enum Mode _mode;
@@ -27,6 +24,7 @@ enum Mode {
   NSURL *plistURL;
   NSDate *date;
   NSDateFormatter *dateFormatter;
+  NSInteger _sessionDuration;
 }
 
 @property NSUInteger finished;
@@ -41,21 +39,29 @@ enum Mode {
 
 - (id)init {
   if ((self = [super init])) {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(timeUpConfirmed:)
-                                                 name:TimeUpConfirmedNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didShow:)
-                                                 name:NSWindowDidBecomeMainNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(timeUpConfirmed:)
+               name:TimeUpConfirmedNotification
+             object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(didShow:)
+               name:NSWindowDidBecomeMainNotification
+             object:nil];
+    [[NSUserDefaults standardUserDefaults]
+        registerDefaults:@{kPomosSessionDurationKey : @(50 * 60)}];
+    _sessionDuration = [[NSUserDefaults standardUserDefaults]
+        integerForKey:kPomosSessionDurationKey];
+
     _mode = Initial;
 
-    NSURL *pDir = [[[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory
-                                                          inDomain:NSUserDomainMask
-                                                 appropriateForURL:nil
-                                                            create:NO
-                                                             error:nil] URLByAppendingPathComponent:@"Pomos"];
+    NSURL *pDir = [[[NSFileManager defaultManager]
+          URLForDirectory:NSApplicationSupportDirectory
+                 inDomain:NSUserDomainMask
+        appropriateForURL:nil
+                   create:NO
+                    error:nil] URLByAppendingPathComponent:@"Pomos"];
     [[NSFileManager defaultManager] createDirectoryAtURL:pDir
                              withIntermediateDirectories:YES
                                               attributes:nil
@@ -70,13 +76,14 @@ enum Mode {
       date = [NSDate date];
     }
     if (dict[@"Finished"]) {
-      [self setFinished:((NSNumber*)dict[@"Finished"]).unsignedIntegerValue];
+      [self setFinished:((NSNumber *)dict[@"Finished"]).unsignedIntegerValue];
     } else {
       [self setFinished:0];
     }
     [self checkFinished];
 
-    dateFormatter = [[NSDateFormatter alloc] initWithDateFormat:@"%H:%M" allowNaturalLanguage:NO];
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:MM"];
   }
   return self;
 }
@@ -91,29 +98,37 @@ enum Mode {
 
 - (void)setFinished:(NSUInteger)finished {
   _finished = finished;
-  [[self finishedLabel] setStringValue:[NSString stringWithFormat:@"%lu", (unsigned long)finished]];
+  [[self finishedLabel]
+      setStringValue:[NSString
+                         stringWithFormat:@"%lu", (unsigned long)finished]];
   [self saveInfo];
 }
 
 - (NSDictionary *)readInfo {
   return [[NSString stringWithContentsOfURL:plistURL
                                    encoding:NSUTF8StringEncoding
-                                      error:nil] propertyListFromStringsFileFormat];
+                                      error:nil]
+      propertyListFromStringsFileFormat];
 }
 
 - (void)saveInfo {
-  NSData *data = [NSPropertyListSerialization dataWithPropertyList:@{@"Date": self->date,
-                                                                     @"Finished": [NSNumber numberWithUnsignedInteger:self.finished]}
-                                                            format:NSPropertyListXMLFormat_v1_0
-                                                           options:0
-                                                             error:nil];
+  NSData *data = [NSPropertyListSerialization
+      dataWithPropertyList:@{
+        @"Date" : self->date,
+        @"Finished" : [NSNumber numberWithUnsignedInteger:self.finished]
+      }
+                    format:NSPropertyListXMLFormat_v1_0
+                   options:0
+                     error:nil];
   if (data) {
     [data writeToURL:plistURL options:NSDataWritingAtomic error:nil];
   }
 }
 
 - (void)setSeconds:(int)seconds {
-  [[self countDownLabel] setStringValue:[NSString stringWithFormat:@"%02d : %02d", seconds / 60, seconds % 60]];
+  [[self countDownLabel]
+      setStringValue:[NSString stringWithFormat:@"%02d : %02d", seconds / 60,
+                                                seconds % 60]];
   [self setBadge:seconds];
 }
 
@@ -169,16 +184,32 @@ enum Mode {
   }
 }
 
-- (void)sendNotificationWithTitle:(NSString *)title withButton:(NSString *)buttonTitle {
-  NSUserNotification *timeUp = [[NSUserNotification alloc] init];
-  [timeUp setTitle:title];
-  [timeUp setActionButtonTitle:buttonTitle];
-  [[NSUserNotificationCenter defaultUserNotificationCenter] scheduleNotification:timeUp];
+- (void)sendNotificationWithTitle:(NSString *)title
+                       withButton:(NSString *)buttonTitle {
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    UNAuthorizationOptions options = UNAuthorizationOptionAlert | UNAuthorizationOptionSound;
+    [center requestAuthorizationWithOptions:options
+                          completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (granted) {
+            UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+            content.title = title;
+            content.body = buttonTitle;
+            content.sound = [UNNotificationSound defaultSound];
+            UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:[[NSUUID UUID] UUIDString] content:content trigger:trigger];
+            [center addNotificationRequest:request withCompletionHandler:nil];
+        }
+    }];
 }
 
 - (IBAction)onClick:(id)sender {
   if (_mode == Working) {
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Are you sure to give up this pomodoro?" defaultButton:@"Yes" alternateButton:@"It's a slip" otherButton:nil informativeTextWithFormat:@""];
+    NSAlert *alert =
+        [NSAlert alertWithMessageText:@"Are you sure to give up this pomodoro?"
+                        defaultButton:@"Yes"
+                      alternateButton:@"It's a slip"
+                          otherButton:nil
+            informativeTextWithFormat:@""];
     [[alert buttons][1] setKeyEquivalent:@"\e"];
     if ([alert runModal] == NSAlertAlternateReturn) {
       return;
@@ -193,10 +224,13 @@ enum Mode {
 
 - (void)checkFinished {
   NSCalendar *calendar = [NSCalendar currentCalendar];
-  NSInteger components = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+  NSInteger components =
+      (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
 
-  NSDateComponents *firstComponents = [calendar components:components fromDate:self->date];
-  NSDateComponents *secondComponents = [calendar components:components fromDate:[NSDate date]];
+  NSDateComponents *firstComponents = [calendar components:components
+                                                  fromDate:self->date];
+  NSDateComponents *secondComponents = [calendar components:components
+                                                   fromDate:[NSDate date]];
 
   NSDate *date1 = [calendar dateFromComponents:firstComponents];
   NSDate *date2 = [calendar dateFromComponents:secondComponents];
@@ -208,47 +242,72 @@ enum Mode {
 }
 
 - (void)nextMode {
-  [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
+  [[UNUserNotificationCenter currentNotificationCenter]
+      removeAllDeliveredNotifications];
   [self checkFinished];
   switch (_mode) {
-    case Initial:
-      _mode = Working;
-      endAt = [NSDate dateWithTimeIntervalSinceNow:SESSION_LENGTH];
-      [self countSeconds];
-      _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
-      [theButton setTitle:@"Give up"];
-      [[self endsAtLabel] setStringValue:[NSString stringWithFormat:@"Ends at %@", [self->dateFormatter stringFromDate:endAt]]];
-      [[self endsAtLabel] setHidden:NO];
-      break;
-    case Working:
-      _mode = Finished;
-      [_timer invalidate];
-      [self setSeconds:BREAK_LENGTH];
-      [theButton setTitle:@"Break"];
-      [self resetBadge];
-      [self setFinished:self.finished+1];
-      [self sendNotificationWithTitle:@"Time Up!" withButton:@"Take a break"];
-      break;
-    case Finished:
-      _mode = Breaking;
-      endAt = [NSDate dateWithTimeIntervalSinceNow:BREAK_LENGTH];
-      [self countSeconds];
-      _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countingDown:) userInfo:nil repeats:YES];
-      [theButton setTitle:@"Skip"];
-      [[self endsAtLabel] setStringValue:[NSString stringWithFormat:@"Ends at %@", [self->dateFormatter stringFromDate:endAt]]];
-      [[self endsAtLabel] setHidden:NO];
-      break;
-    case Breaking:
-      _mode = Initial;
-      [_timer invalidate];
-      [self setSeconds:SESSION_LENGTH];
-      [theButton setTitle:@"Start"];
-      [self resetBadge];
-      [self sendNotificationWithTitle:@"Back to work" withButton:@"Sure"];
-      break;
-    default:
-      break;
+  case Initial:
+    _mode = Working;
+    endAt = [NSDate dateWithTimeIntervalSinceNow:self.sessionDuration];
+    [self countSeconds];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                              target:self
+                                            selector:@selector(countingDown:)
+                                            userInfo:nil
+                                             repeats:YES];
+    [theButton setTitle:@"Give up"];
+    [[self endsAtLabel]
+        setStringValue:[NSString stringWithFormat:@"Ends at %@",
+                                                  [self->dateFormatter
+                                                      stringFromDate:endAt]]];
+    [[self endsAtLabel] setHidden:NO];
+    break;
+  case Working:
+    _mode = Finished;
+    [_timer invalidate];
+    [self setSeconds:BREAK_LENGTH];
+    [theButton setTitle:@"Break"];
+    [self resetBadge];
+    [self setFinished:self.finished + 1];
+    [self sendNotificationWithTitle:@"Time Up!" withButton:@"Take a break"];
+    break;
+  case Finished:
+    _mode = Breaking;
+    endAt = [NSDate dateWithTimeIntervalSinceNow:BREAK_LENGTH];
+    [self countSeconds];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                              target:self
+                                            selector:@selector(countingDown:)
+                                            userInfo:nil
+                                             repeats:YES];
+    [theButton setTitle:@"Skip"];
+    [[self endsAtLabel]
+        setStringValue:[NSString stringWithFormat:@"Ends at %@",
+                                                  [self->dateFormatter
+                                                      stringFromDate:endAt]]];
+    [[self endsAtLabel] setHidden:NO];
+    break;
+  case Breaking:
+    _mode = Initial;
+    [_timer invalidate];
+    [self setSeconds:(int)self.sessionDuration];
+    [theButton setTitle:@"Start"];
+    [self resetBadge];
+    [self sendNotificationWithTitle:@"Back to work" withButton:@"Sure"];
+    break;
+  default:
+    break;
   }
+}
+
+- (NSInteger)sessionDuration {
+  return _sessionDuration;
+}
+
+- (void)setSessionDuration:(NSInteger)seconds {
+  _sessionDuration = seconds;
+  [[NSUserDefaults standardUserDefaults] setInteger:seconds
+                                             forKey:kPomosSessionDurationKey];
 }
 
 @end
