@@ -38,31 +38,41 @@ struct ContentView: View {
                         viewModel.startSession()
                     }
                     .buttonStyle(.borderedProminent)
+                    .keyboardShortcut(.defaultAction)
+                    .keyboardShortcut(.space)
                     
                 case .working:
                     Button("Give Up") {
                         showingGiveUpAlert = true
                     }
-                    .alert(isPresented: $showingGiveUpAlert) {
-                        Alert(
-                            title: Text("Are you sure?"),
-                            primaryButton: .destructive(Text("Yes")) {
-                                viewModel.giveUp()
-                            },
-                            secondaryButton: .cancel(Text("It's a slip"))
-                        )
-                    }
+                    .alert("", isPresented: $showingGiveUpAlert) {
+                                Button("Yes") {
+                                    viewModel.giveUp()
+                                }
+                                .buttonStyle(.plain)
+                                .keyboardShortcut(.defaultAction)
+                                Button("It's a slip", role: .cancel) {}
+                                .keyboardShortcut(.cancelAction)
+                            } message: {
+                                Text("Are you sure?")
+                            }
+                    .keyboardShortcut(.defaultAction)
+                    .keyboardShortcut(.space)
                     
                 case .finished:
                     Button("Break") {
                         viewModel.takeBreak()
                     }
                     .buttonStyle(.borderedProminent)
+                    .keyboardShortcut(.defaultAction)
+                    .keyboardShortcut(.space)
                     
                 case .breaking:
                     Button("Skip") {
                         viewModel.skipBreak() // Or "Start"? Logic says "Skip" -> Back to work/Start
                     }
+                    .keyboardShortcut(.defaultAction)
+                    .keyboardShortcut(.space)
                 }
             }
             
@@ -82,6 +92,9 @@ struct ContentView: View {
         }
         .padding()
         .frame(minWidth: 300, minHeight: 400)
+        .task {
+            await viewModel.setupAsync()
+        }
     }
     
     private func timeString(from totalSeconds: Int) -> String {
@@ -96,3 +109,4 @@ struct ContentView: View {
         return formatter.string(from: date)
     }
 }
+

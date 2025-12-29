@@ -16,6 +16,7 @@ enum TimerMode {
     case breaking
 }
 
+@MainActor
 class TimerViewModel: ObservableObject {
     @Published var mode: TimerMode = .initial
     @Published var secondsRemaining: Int = 0
@@ -27,20 +28,27 @@ class TimerViewModel: ObservableObject {
         }
     }
     
-    var timer: Timer?
+    var task: Task<(), Error>?
     let breakDuration = 5 * 60
     
     init() {
-        // Load settings
+        // Set temporary default values
         let savedDuration = UserDefaults.standard.integer(forKey: "PomosSessionDuration")
         self.sessionDuration = savedDuration > 0 ? savedDuration : 50 * 60
-        
+        self.finishedCount = 0
+    }
+    
+    func setupAsync() async {
         // Load stats
-//        let stats = StatsService.shared.readStats()
-//        self.finishedCount = stats.finished
-        
+        let stats = await StatsService.shared.readStats()
+        self.finishedCount = stats.finished
+
         // Request notification permission
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+        do {
+            try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
+        } catch {
+            print("Failed to request notification permission: \(error)")
+        }
     }
     
     func startSession() {
@@ -52,6 +60,7 @@ class TimerViewModel: ObservableObject {
         // In SwiftUI, we might handle the alert in the View, but we can reset here
         stopTimer()
         mode = .initial
+        secondsRemaining = 0
         resetBadge()
     }
     
@@ -68,37 +77,42 @@ class TimerViewModel: ObservableObject {
         secondsRemaining = duration
         endAt = Date().addingTimeInterval(TimeInterval(duration))
         updateBadge()
-        
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-            self?.tick()
+
+        task = Task { [weak self] in
+            while !Task.isCancelled {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                
+                guard let self = self else { return }
+
+                await self.tick()
+            }
         }
     }
     
     private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
+        task?.cancel()
+        task = nil
     }
     
-    private func tick() {
+    private func tick() async {
         guard let endAt = endAt else { return }
         let remaining = Int(endAt.timeIntervalSinceNow)
         secondsRemaining = max(0, remaining)
         updateBadge()
         
         if secondsRemaining <= 0 {
-            timerValidComplete()
+            await timerValidComplete()
         }
     }
     
-    private func timerValidComplete() {
+    private func timerValidComplete() async {
         stopTimer()
         
         switch mode {
         case .working:
             mode = .finished
             finishedCount += 1
-//            StatsService.shared.saveStats(DailyStats(date: Date(), finished: finishedCount))
+            await StatsService.shared.saveStats(DailyStats(date: Date(), finished: finishedCount))
             sendNotification(title: "Time Up!", body: "Take a break")
             secondsRemaining = breakDuration // Pre-set for display if needed
             
@@ -153,3 +167,4 @@ class TimerViewModel: ObservableObject {
         NSApp.dockTile.badgeLabel = nil
     }
 }
+

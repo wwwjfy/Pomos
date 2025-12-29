@@ -34,7 +34,7 @@ actor StatsService {
         fileURL = pomosDir.appendingPathComponent("pomos.plist")
     }
     
-    func readStats() -> DailyStats {
+    func readStats() async -> DailyStats {
         guard let data = try? Data(contentsOf: fileURL),
               let stats = try? PropertyListDecoder().decode(DailyStats.self, from: data) else {
             return DailyStats(date: Date(), finished: 0)
