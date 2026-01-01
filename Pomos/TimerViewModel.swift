@@ -74,6 +74,7 @@ class TimerViewModel: ObservableObject {
     }
     
     private func startTimer(duration: Int) {
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         secondsRemaining = duration
         endAt = Date().addingTimeInterval(TimeInterval(duration))
         updateBadge()
@@ -132,6 +133,8 @@ class TimerViewModel: ObservableObject {
     // MARK: - Notifications & Badge
     
     private func sendNotification(title: String, body: String) {
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
