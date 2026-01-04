@@ -10,14 +10,14 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = TimerViewModel()
     @State private var showingGiveUpAlert = false
-    
+
     var body: some View {
         VStack(spacing: 20) {
             // Timer Display
             Text(timeString(from: viewModel.secondsRemaining))
                 .font(.system(size: 60, weight: .bold, design: .monospaced))
                 .padding()
-            
+
             // Status Info
             if let endAt = viewModel.endAt, viewModel.mode == .working || viewModel.mode == .breaking {
                 Text("Ends at \(formatTime(endAt))")
@@ -25,11 +25,11 @@ struct ContentView: View {
             } else {
                 Text(" ") // Placeholder to keep layout stable
             }
-            
+
             // Finished Count
             Text("Finished: \(viewModel.finishedCount)")
                 .font(.headline)
-            
+
             // Controls
             HStack(spacing: 15) {
                 switch viewModel.mode {
@@ -40,7 +40,7 @@ struct ContentView: View {
                     .buttonStyle(.borderedProminent)
                     .keyboardShortcut(.defaultAction)
                     .keyboardShortcut(.space)
-                    
+
                 case .working:
                     Button("Give Up") {
                         showingGiveUpAlert = true
@@ -58,7 +58,7 @@ struct ContentView: View {
                             }
                     .keyboardShortcut(.defaultAction)
                     .keyboardShortcut(.space)
-                    
+
                 case .finished:
                     Button("Break") {
                         viewModel.takeBreak()
@@ -66,7 +66,7 @@ struct ContentView: View {
                     .buttonStyle(.borderedProminent)
                     .keyboardShortcut(.defaultAction)
                     .keyboardShortcut(.space)
-                    
+
                 case .breaking:
                     Button("Skip") {
                         viewModel.skipBreak() // Or "Start"? Logic says "Skip" -> Back to work/Start
@@ -75,9 +75,9 @@ struct ContentView: View {
                     .keyboardShortcut(.space)
                 }
             }
-            
+
             Divider()
-            
+
             // Settings
             HStack {
                 Text("Duration:")
@@ -96,17 +96,16 @@ struct ContentView: View {
             await viewModel.setupAsync()
         }
     }
-    
+
     private func timeString(from totalSeconds: Int) -> String {
         let minutes = totalSeconds / 60
         let seconds = totalSeconds % 60
         return String(format: "%02d : %02d", minutes, seconds)
     }
-    
+
     private func formatTime(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter.string(from: date)
     }
 }
-
