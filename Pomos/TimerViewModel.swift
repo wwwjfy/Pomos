@@ -75,6 +75,7 @@ class TimerViewModel: ObservableObject {
     
     private func startTimer(duration: Int) {
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        stopTimer()
         secondsRemaining = duration
         endAt = Date().addingTimeInterval(TimeInterval(duration))
         updateBadge()
