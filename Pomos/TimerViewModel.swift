@@ -45,7 +45,7 @@ class TimerViewModel: ObservableObject {
 
         // Request notification permission
         do {
-            try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
+            try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
         } catch {
             print("Failed to request notification permission: \(error)")
         }
