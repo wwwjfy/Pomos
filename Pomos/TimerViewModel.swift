@@ -1,173 +1,280 @@
-//
-//  TimerViewModel.swift
-//  Pomos
-//
-//  Created by Assistant on 2025-12-15.
-//
-
-import SwiftUI
-import UserNotifications
+import Foundation
 import AppKit
+import Combine
+import UserNotifications
 
-enum TimerMode {
-    case initial
-    case working
-    case finished
-    case breaking
-}
+final class TimerViewModel: ObservableObject {
+    // MARK: - Published Properties
 
-@MainActor
-class TimerViewModel: ObservableObject {
-    @Published var mode: TimerMode = .initial
-    @Published var secondsRemaining: Int = 0
+    @Published var state: TimerState = .idle
+    @Published var remainingSeconds: Int
     @Published var finishedCount: Int = 0
-    @Published var endAt: Date?
-    @Published var sessionDuration: Int {
-        didSet {
-            UserDefaults.standard.set(sessionDuration, forKey: "PomosSessionDuration")
-        }
-    }
+    @Published var endTimeText: String = ""
+    @Published var buttonTitle: String = "Start"
+    @Published var sessionMinutes: Int = 50
 
-    var task: Task<(), Error>?
-    let breakDuration = 5 * 60
+    // MARK: - Private Properties
+
+    private let storage = StorageService.shared
+    private let notifications = NotificationService.shared
+
+    private var timer: Timer?
+    private var endAt: Date?
+    private let breakLength = 5 * 60 // 5 minutes
+
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }()
+
+    // MARK: - Initialization
+
+    private let defaultSessionDuration = 50 * 60 // 50 minutes in seconds
 
     init() {
-        // Set temporary default values
-        let savedDuration = UserDefaults.standard.integer(forKey: "PomosSessionDuration")
-        self.sessionDuration = savedDuration > 0 ? savedDuration : 50 * 60
-        self.finishedCount = 0
-    }
+        let stored = storage.sessionDuration
+        let duration = stored > 0 ? stored : defaultSessionDuration
+        remainingSeconds = duration
+        sessionMinutes = duration / 60
+        finishedCount = storage.checkAndResetIfNewDay()
+        updateUI()
 
-    func setupAsync() async {
-        // Load stats
-        let stats = await StatsService.shared.readStats()
-        self.finishedCount = stats.finished
-
-        // Request notification permission
-        do {
-            try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
-        } catch {
-            print("Failed to request notification permission: \(error)")
+        notifications.requestAuthorization { _ in }
+        notifications.onNotificationTapped = { [weak self] in
+            self?.handleNotificationTap()
         }
     }
 
-    func startSession() {
-        mode = .working
-        startTimer(duration: sessionDuration)
+    // MARK: - Public Actions
+
+    func onButtonClick() {
+        switch state {
+        case .working:
+            break // Handled by View with confirmation dialog
+        case .breaking:
+            skipBreak()
+        default:
+            nextState()
+        }
     }
 
-    func giveUp() {
-        // In SwiftUI, we might handle the alert in the View, but we can reset here
-        stopTimer()
-        mode = .initial
-        secondsRemaining = 0
-        resetBadge()
+    func configureSessionDuration(_ minutes: Int) {
+        sessionMinutes = minutes
+        storage.sessionDuration = minutes * 60
+        if state == .idle {
+            remainingSeconds = minutes * 60
+            updateUI()
+        }
     }
 
-    func takeBreak() {
-        mode = .breaking
-        startTimer(duration: breakDuration)
+    // MARK: - Private Methods
+
+    private func nextState() {
+        notifications.removeAllDeliveredNotifications()
+        finishedCount = storage.checkAndResetIfNewDay()
+
+        switch state {
+        case .idle:
+            startWorking()
+        case .finished:
+            startBreaking()
+        case .breaking:
+            resetToIdle()
+        case .working:
+            break // Handled by alert
+        }
     }
 
-    func skipBreak() {
-        startSession()
+    private func startWorking() {
+        state = .working
+        endAt = Date().addingTimeInterval(TimeInterval(storage.sessionDuration))
+        remainingSeconds = storage.sessionDuration
+
+        startTimer()
+        updateEndTimeLabel()
+        updateButtonTitle()
+        updateDockBadge()
     }
 
-    private func startTimer(duration: Int) {
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        stopTimer()
-        secondsRemaining = duration
-        endAt = Date().addingTimeInterval(TimeInterval(duration))
-        updateBadge()
+    private func startBreaking() {
+        state = .breaking
+        endAt = Date().addingTimeInterval(TimeInterval(breakLength))
+        remainingSeconds = breakLength
 
-        task = Task { [weak self] in
-            while !Task.isCancelled {
-                try await Task.sleep(nanoseconds: 1_000_000_000)
+        startTimer()
+        updateEndTimeLabel()
+        updateButtonTitle()
+        updateDockBadge()
+    }
 
-                guard let self = self else { return }
+    private func resetToIdle() {
+        state = .idle
+        remainingSeconds = storage.sessionDuration
+        endAt = nil
 
-                await self.tick()
+        timer?.invalidate()
+        timer = nil
+        resetDockBadge()
+        updateEndTimeLabel()
+        updateButtonTitle()
+    }
+
+    private func workFinished() {
+        state = .finished
+        timer?.invalidate()
+        timer = nil
+
+        remainingSeconds = breakLength
+        finishedCount = storage.incrementAndSave()
+
+        resetDockBadge()
+        updateButtonTitle()
+        notifications.sendNotification(title: "Time Up!", body: "Take a break")
+    }
+
+    private func breakFinished() {
+        state = .idle
+        timer?.invalidate()
+        timer = nil
+
+        remainingSeconds = storage.sessionDuration
+        endAt = nil
+
+        resetDockBadge()
+        updateEndTimeLabel()
+        updateButtonTitle()
+        notifications.sendNotification(title: "Back to work", body: "Sure")
+    }
+
+    private func skipBreak() {
+        timer?.invalidate()
+        timer = nil
+        resetToIdle()
+    }
+
+    func confirmGiveUp() {
+        // User chose to give up - go back to idle, no break
+        state = .idle
+        timer?.invalidate()
+        timer = nil
+
+        remainingSeconds = sessionMinutes * 60
+        endAt = nil
+
+        resetDockBadge()
+        updateEndTimeLabel()
+        updateButtonTitle()
+    }
+
+    func cancelGiveUp() {
+        // Do nothing, just dismiss
+    }
+
+    func showGiveUpAlert() {
+        guard let window = NSApplication.shared.keyWindow else { return }
+
+        let alert = NSAlert()
+        alert.messageText = "Are you sure to give up this pomodoro?"
+        let yesButton = alert.addButton(withTitle: "Yes")
+        let cancelButton = alert.addButton(withTitle: "It's a slip")
+        yesButton.keyEquivalent = "\r"
+        cancelButton.keyEquivalent = "\u{1B}"
+        cancelButton.isBordered = true
+
+        alert.beginSheetModal(for: window) { response in
+            if response == .alertFirstButtonReturn {
+                self.confirmGiveUp()
             }
         }
     }
 
-    private func stopTimer() {
-        task?.cancel()
-        task = nil
-    }
+    private func handleNotificationTap() {
+        guard timer == nil else { return }
 
-    private func tick() async {
-        guard let endAt = endAt else { return }
-        let remaining = Int(endAt.timeIntervalSinceNow)
-        secondsRemaining = max(0, remaining)
-        updateBadge()
-
-        if secondsRemaining <= 0 {
-            await timerValidComplete()
+        if state == .finished || state == .idle {
+            nextState()
         }
     }
 
-    private func timerValidComplete() async {
-        stopTimer()
+    private func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            if self.remainingSeconds > 0 {
+                self.remainingSeconds -= 1
+                self.updateDockBadge()
+                if self.remainingSeconds <= 0 {
+                    switch self.state {
+                    case .working:
+                        self.workFinished()
+                    case .breaking:
+                        self.breakFinished()
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+    }
 
-        switch mode {
+    private func tick() {
+        // Not used anymore
+    }
+
+    private func updateUI() {
+        updateButtonTitle()
+        updateEndTimeLabel()
+    }
+
+    private func updateButtonTitle() {
+        switch state {
+        case .idle:
+            buttonTitle = "Start"
         case .working:
-            mode = .finished
-            finishedCount += 1
-            await StatsService.shared.saveStats(DailyStats(date: Date(), finished: finishedCount))
-            sendNotification(title: "Time Up!", body: "Take a break")
-            secondsRemaining = breakDuration // Pre-set for display if needed
-
+            buttonTitle = "Give up"
+        case .finished:
+            buttonTitle = "Break"
         case .breaking:
-            mode = .initial
-            sendNotification(title: "Back to work", body: "Ready?")
-            secondsRemaining = sessionDuration // Pre-set
+            buttonTitle = "Skip"
+        }
+    }
 
-        default:
-            break
+    private func updateEndTimeLabel() {
+        if let endAt = endAt {
+            endTimeText = "Ends at \(dateFormatter.string(from: endAt))"
+        } else {
+            endTimeText = ""
+        }
+    }
+
+    // MARK: - Dock Badge
+
+    private func updateDockBadge() {
+        guard state == .working || state == .breaking else {
+            resetDockBadge()
+            return
         }
 
-        resetBadge() // Or keep it? Original code resets on Finished/Initial logic.
-        // Controller.m: resetBadge on Working->Finished.
-    }
-
-    // MARK: - Notifications & Badge
-
-    private func sendNotification(title: String, body: String) {
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.body = body
-        content.sound = .default
-
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
-        UNUserNotificationCenter.current().add(request)
-    }
-
-    private func updateBadge() {
-        let min = secondsRemaining / 60
-        let sec = secondsRemaining % 60
-        var label: String
+        let min = remainingSeconds / 60
+        let sec = remainingSeconds % 60
+        var badge: String
 
         if min >= 5 {
-            label = "\(min) min"
+            badge = "\(min) min"
         } else if min >= 1 {
-            // "min:00" or "min:30" approximation from original code
-            let secApprox = (sec / 30) * 30
-            label = String(format: "%d:%02d", min, secApprox)
+            badge = String(format: "%d:%02d", min, (sec / 30) * 30)
         } else {
             if sec > 10 {
-                label = "\(sec / 10 * 10) s"
+                badge = "\((sec / 10) * 10) s"
             } else {
-                label = "\(sec) s"
+                badge = "\(sec) s"
             }
         }
 
-        NSApp.dockTile.badgeLabel = label
+        NSApplication.shared.dockTile.badgeLabel = badge
     }
 
-    private func resetBadge() {
-        NSApp.dockTile.badgeLabel = nil
+    private func resetDockBadge() {
+        NSApplication.shared.dockTile.badgeLabel = nil
     }
 }

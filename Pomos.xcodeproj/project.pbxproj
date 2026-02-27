@@ -3,28 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA859AC62EF053BB00B8BD6C /* StatsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA859AC42EF053BB00B8BD6C /* StatsService.swift */; };
-		EA859AC72EF053BB00B8BD6C /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA859AC52EF053BB00B8BD6C /* TimerViewModel.swift */; };
-		EA859AC82EF053BB00B8BD6C /* PomosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA859AC32EF053BB00B8BD6C /* PomosApp.swift */; };
-		EA859AC92EF053BB00B8BD6C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA859AC22EF053BB00B8BD6C /* ContentView.swift */; };
 		EAC3C06816F2B570003EB5EB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC3C06716F2B570003EB5EB /* Cocoa.framework */; };
 		EAC3C07216F2B570003EB5EB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAC3C07016F2B570003EB5EB /* InfoPlist.strings */; };
 		EAC3C07816F2B570003EB5EB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = EAC3C07616F2B570003EB5EB /* Credits.rtf */; };
-		EAC3C08116F2B571003EB5EB /* Pomos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */; };
 		EAF429EE2EE732AF00673D73 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF429ED2EE732AF00673D73 /* UserNotifications.framework */; };
 		EAF9B8E01ECAFD5E005B81CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAF9B8DF1ECAFD5E005B81CD /* Images.xcassets */; };
+		SWIFT00011234567890000001 /* PomosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWIFT00011234567890000002 /* PomosApp.swift */; };
+		SWIFT00011234567890000003 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWIFT00011234567890000004 /* AppDelegate.swift */; };
+		SWIFT00011234567890000005 /* TimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWIFT00011234567890000006 /* TimerState.swift */; };
+		SWIFT00011234567890000007 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWIFT00011234567890000008 /* TimerView.swift */; };
+		SWIFT00011234567890000009 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWIFT00011234567890000010 /* TimerViewModel.swift */; };
+		SWIFT00011234567890000011 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWIFT00011234567890000012 /* StorageService.swift */; };
+		SWIFT00011234567890000013 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWIFT00011234567890000014 /* NotificationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EA1BE8C516F6F10400D05D6D /* Pomos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Pomos.entitlements; sourceTree = "<group>"; };
-		EA859AC22EF053BB00B8BD6C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		EA859AC32EF053BB00B8BD6C /* PomosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomosApp.swift; sourceTree = "<group>"; };
-		EA859AC42EF053BB00B8BD6C /* StatsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsService.swift; sourceTree = "<group>"; };
-		EA859AC52EF053BB00B8BD6C /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
 		EAC3C06416F2B570003EB5EB /* Pomos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC3C06716F2B570003EB5EB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		EAC3C06A16F2B570003EB5EB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -34,9 +32,15 @@
 		EAC3C07116F2B570003EB5EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EAC3C07516F2B570003EB5EB /* Pomos-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pomos-Prefix.pch"; sourceTree = "<group>"; };
 		EAC3C07716F2B570003EB5EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		EAC3C08016F2B571003EB5EB /* Pomos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pomos.xcdatamodel; sourceTree = "<group>"; };
 		EAF429ED2EE732AF00673D73 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		EAF9B8DF1ECAFD5E005B81CD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		SWIFT00011234567890000002 /* PomosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomosApp.swift; sourceTree = "<group>"; };
+		SWIFT00011234567890000004 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		SWIFT00011234567890000006 /* TimerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerState.swift; sourceTree = "<group>"; };
+		SWIFT00011234567890000008 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		SWIFT00011234567890000010 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
+		SWIFT00011234567890000012 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		SWIFT00011234567890000014 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,14 +96,16 @@
 		EAC3C06D16F2B570003EB5EB /* Pomos */ = {
 			isa = PBXGroup;
 			children = (
-				EA859AC22EF053BB00B8BD6C /* ContentView.swift */,
-				EA859AC32EF053BB00B8BD6C /* PomosApp.swift */,
-				EA859AC42EF053BB00B8BD6C /* StatsService.swift */,
-				EA859AC52EF053BB00B8BD6C /* TimerViewModel.swift */,
 				EA1BE8C516F6F10400D05D6D /* Pomos.entitlements */,
-				EAC3C07F16F2B571003EB5EB /* Pomos.xcdatamodeld */,
 				EAF9B8DF1ECAFD5E005B81CD /* Images.xcassets */,
 				EAC3C06E16F2B570003EB5EB /* Supporting Files */,
+				SWIFT00011234567890000002 /* PomosApp.swift */,
+				SWIFT00011234567890000004 /* AppDelegate.swift */,
+				SWIFT00011234567890000006 /* TimerState.swift */,
+				SWIFT00011234567890000008 /* TimerView.swift */,
+				SWIFT00011234567890000010 /* TimerViewModel.swift */,
+				SWIFT00011234567890000012 /* StorageService.swift */,
+				SWIFT00011234567890000014 /* NotificationService.swift */,
 			);
 			path = Pomos;
 			sourceTree = "<group>";
@@ -141,12 +147,10 @@
 		EAC3C05C16F2B570003EB5EB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 0460;
 				TargetAttributes = {
 					EAC3C06316F2B570003EB5EB = {
 						DevelopmentTeam = 93RF9AKSH8;
-						LastSwiftMigration = 2620;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -157,7 +161,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = EAC3C05B16F2B570003EB5EB;
 			productRefGroup = EAC3C06516F2B570003EB5EB /* Products */;
@@ -187,11 +190,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA859AC62EF053BB00B8BD6C /* StatsService.swift in Sources */,
-				EA859AC72EF053BB00B8BD6C /* TimerViewModel.swift in Sources */,
-				EA859AC82EF053BB00B8BD6C /* PomosApp.swift in Sources */,
-				EA859AC92EF053BB00B8BD6C /* ContentView.swift in Sources */,
-				EAC3C08116F2B571003EB5EB /* Pomos.xcdatamodeld in Sources */,
+				SWIFT00011234567890000001 /* PomosApp.swift in Sources */,
+				SWIFT00011234567890000003 /* AppDelegate.swift in Sources */,
+				SWIFT00011234567890000005 /* TimerState.swift in Sources */,
+				SWIFT00011234567890000007 /* TimerView.swift in Sources */,
+				SWIFT00011234567890000009 /* TimerViewModel.swift in Sources */,
+				SWIFT00011234567890000011 /* StorageService.swift in Sources */,
+				SWIFT00011234567890000013 /* NotificationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,35 +229,16 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 93RF9AKSH8;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -261,14 +247,11 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 			};
 			name = Debug;
 		};
@@ -279,44 +262,22 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 93RF9AKSH8;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};
@@ -325,27 +286,20 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Pomos/Pomos.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 102;
-				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
+				DEVELOPMENT_TEAM = 93RF9AKSH8;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
 				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Pomos;
-				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = net.wwwjfy.pomos;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -355,26 +309,20 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Pomos/Pomos.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 102;
-				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
+				DEVELOPMENT_TEAM = 93RF9AKSH8;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pomos/Pomos-Prefix.pch";
 				INFOPLIST_FILE = "Pomos/Pomos-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Pomos;
-				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = net.wwwjfy.pomos;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

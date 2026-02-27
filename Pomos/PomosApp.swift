@@ -1,10 +1,3 @@
-//
-//  PomosApp.swift
-//  Pomos
-//
-//  Created by Assistant on 2025-12-15.
-//
-
 import SwiftUI
 
 @main
@@ -13,14 +6,9 @@ struct PomosApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TimerView()
         }
-        .windowStyle(HiddenTitleBarWindowStyle())
-    }
-}
-
-class AppDelegate: NSObject, NSApplicationDelegate {
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return true
+        .windowStyle(.hiddenTitleBar)
+        .windowResizability(.contentSize)
     }
 }
