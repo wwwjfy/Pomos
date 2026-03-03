@@ -192,7 +192,7 @@ final class TimerViewModel: ObservableObject {
     private func handleNotificationTap() {
         guard timer == nil else { return }
 
-        if state == .finished || state == .idle {
+        if state == .idle {
             nextState()
         }
     }
